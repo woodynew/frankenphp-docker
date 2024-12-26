@@ -1,4 +1,4 @@
-name: release-v8.3
+name: release-8.3-grpc
 on:
   push:
     tags:
