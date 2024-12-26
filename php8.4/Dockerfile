@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:php8.4-alpine
+FROM dunglas/frankenphp:php8.4.2-alpine
 
 # Composer - https://getcomposer.org/download/
 ARG COMPOSER_VERSION="2.8.4"
