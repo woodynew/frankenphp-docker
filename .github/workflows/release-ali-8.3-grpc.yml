@@ -37,7 +37,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: woodynew/frankenphp-grpc
+          images: registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp-grpc
           flavor: |
             latest=true
           tags: |
