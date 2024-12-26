@@ -1,4 +1,4 @@
-name: release-8.3-grpc
+name: release-ali-8.3-grpc
 on:
   push:
     tags:

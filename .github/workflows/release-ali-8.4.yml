@@ -1,4 +1,4 @@
-name: release-v8.4
+name: release-ali-8.4
 on:
   push:
     tags:
