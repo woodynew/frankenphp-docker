@@ -15,7 +15,6 @@ jobs:
           - 386
           - arm64
           - armv7
-          - armv6
         include:
           - build: amd64
             arch: linux/amd64
@@ -23,8 +22,6 @@ jobs:
             arch: linux/386
           - build: arm64
             arch: linux/arm64
-          - build: armv6
-            arch: linux/arm/v6
           - build: armv7
             arch: linux/arm/v7
     name: PHP 8.3 (${{ matrix.build }})
@@ -90,7 +87,6 @@ jobs:
               --amend woodynew/frankenphp:$SEMVER_MINOR-amd64 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-386 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-arm64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-armv6 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-armv7
           docker manifest push woodynew/frankenphp:$SEMVER_MINOR
       -
@@ -101,7 +97,6 @@ jobs:
               --amend woodynew/frankenphp:$SEMVER_MINOR-amd64 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-386 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-arm64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-armv6 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-armv7
           docker manifest push woodynew/frankenphp:latest
       -
@@ -110,7 +105,6 @@ jobs:
           docker pull woodynew/frankenphp:$SEMVER_MINOR-amd64
           docker pull woodynew/frankenphp:$SEMVER_MINOR-386
           docker pull woodynew/frankenphp:$SEMVER_MINOR-arm64
-          docker pull woodynew/frankenphp:$SEMVER_MINOR-armv6
           docker pull woodynew/frankenphp:$SEMVER_MINOR-armv7
       -
         name: Push semver alias
@@ -120,7 +114,6 @@ jobs:
               --amend woodynew/frankenphp:$SEMVER_MINOR-amd64 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-386 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-arm64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-armv6 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-armv7
           docker manifest push woodynew/frankenphp:$SEMVER
       -
@@ -131,6 +124,5 @@ jobs:
               --amend woodynew/frankenphp:$SEMVER_MINOR-amd64 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-386 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-arm64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-armv6 \
               --amend woodynew/frankenphp:$SEMVER_MINOR-armv7
           docker manifest push woodynew/frankenphp:$SEMVER_MAJOR
