@@ -1,9 +1,9 @@
-name: release-8.4-grpc
+name: release-8.3-grpc
 on:
   push:
     tags:
-    - 'v8.4.[0-9]+-grpc'
-    - 'v8.4.[0-9]+-beta.[0-9]+-grpc'
+    - 'v8.3.[0-9]+-grpc'
+    - 'v8.3.[0-9]+-beta.[0-9]+-grpc'
 
 jobs:
   docker-build:
@@ -24,7 +24,7 @@ jobs:
             arch: linux/arm64
           - build: armv7
             arch: linux/arm/v7
-    name: PHP 8.4 Grpc (${{ matrix.build }})
+    name: PHP 8.3 Grpc (${{ matrix.build }})
     steps:
       -
         name: Checkout
@@ -49,8 +49,9 @@ jobs:
         name: Login to DockerHub
         uses: docker/login-action@v3 
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ${{ secrets.ALI_DOCKERHUB_REGISTRY }}
+          username: ${{ secrets.ALI_DOCKERHUB_USERNAME }}
+          password: ${{ secrets.ALI_DOCKERHUB_TOKEN }}
       -
         name: Build and push
         uses: docker/build-push-action@v5
@@ -59,7 +60,7 @@ jobs:
           provenance: false
           context: .
           platforms: ${{ matrix.arch }}
-          file: php8.4-grpc/Dockerfile
+          file: php8.3-grpc/Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
 
   docker-manifest:
@@ -77,8 +78,9 @@ jobs:
         name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ${{ secrets.ALI_DOCKERHUB_REGISTRY }}
+          username: ${{ secrets.ALI_DOCKERHUB_USERNAME }}
+          password: ${{ secrets.ALI_DOCKERHUB_TOKEN }}
       -
         name: Push semver minor alias
         run: |
@@ -90,7 +92,7 @@ jobs:
               --amend woodynew/frankenphp:$SEMVER_MINOR-armv7
           docker manifest push woodynew/frankenphp:$SEMVER_MINOR
       -
-        name: Push latest (PHP 8.4 or newer)
+        name: Push latest (PHP 8.3 or newer)
         run: |
           docker manifest create \
             woodynew/frankenphp:latest \
@@ -117,7 +119,7 @@ jobs:
               --amend woodynew/frankenphp:$SEMVER_MINOR-armv7
           docker manifest push woodynew/frankenphp:$SEMVER
       -
-        name: Push semver major alias (PHP 8.4 or newer)
+        name: Push semver major alias (PHP 8.3 or newer)
         run: |
           docker manifest create \
             woodynew/frankenphp:$SEMVER_MAJOR \
