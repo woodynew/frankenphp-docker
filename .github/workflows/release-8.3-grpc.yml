@@ -2,8 +2,8 @@ name: release-8.3-grpc
 on:
   push:
     tags:
-    - 'v8.3.[0-9]+-grpc$'
-    - 'v8.3.[0-9]+-beta.[0-9]+-grpc$'
+    - 'v8.3.[0-9]+-grpc'
+    - 'v8.3.[0-9]+-beta.[0-9]+-grpc'
 
 jobs:
   docker-build:
