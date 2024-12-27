@@ -1,4 +1,4 @@
-name: release-v8.3
+name: release-ali-8.3
 on:
   push:
     tags:
@@ -37,7 +37,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: woodynew/frankenphp
+          images: registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp
           flavor: |
             latest=true
           tags: |
@@ -49,8 +49,9 @@ jobs:
         name: Login to DockerHub
         uses: docker/login-action@v3 
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ${{ secrets.ALI_DOCKERHUB_REGISTRY }}
+          username: ${{ secrets.ALI_DOCKERHUB_USERNAME }}
+          password: ${{ secrets.ALI_DOCKERHUB_TOKEN }}
       -
         name: Build and push
         uses: docker/build-push-action@v5
@@ -77,52 +78,53 @@ jobs:
         name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ${{ secrets.ALI_DOCKERHUB_REGISTRY }}
+          username: ${{ secrets.ALI_DOCKERHUB_USERNAME }}
+          password: ${{ secrets.ALI_DOCKERHUB_TOKEN }}
       -
         name: Push semver minor alias
         run: |
           docker manifest create \
-            woodynew/frankenphp:$SEMVER_MINOR \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-amd64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-386 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-arm64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-armv7
-          docker manifest push woodynew/frankenphp:$SEMVER_MINOR
+            registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-amd64 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-386 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-arm64 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-armv7
+          docker manifest push registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR
       -
         name: Push latest (PHP 8.3 or newer)
         run: |
           docker manifest create \
-            woodynew/frankenphp:latest \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-amd64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-386 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-arm64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-armv7
-          docker manifest push woodynew/frankenphp:latest
+            registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:latest \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-amd64 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-386 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-arm64 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-armv7
+          docker manifest push registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:latest
       -
         name: Pull all images
         run: |
-          docker pull woodynew/frankenphp:$SEMVER_MINOR-amd64
-          docker pull woodynew/frankenphp:$SEMVER_MINOR-386
-          docker pull woodynew/frankenphp:$SEMVER_MINOR-arm64
-          docker pull woodynew/frankenphp:$SEMVER_MINOR-armv7
+          docker pull registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-amd64
+          docker pull registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-386
+          docker pull registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-arm64
+          docker pull registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-armv7
       -
         name: Push semver alias
         run: |
           docker manifest create \
-            woodynew/frankenphp:$SEMVER \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-amd64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-386 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-arm64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-armv7
-          docker manifest push woodynew/frankenphp:$SEMVER
+            registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-amd64 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-386 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-arm64 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-armv7
+          docker manifest push registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER
       -
         name: Push semver major alias (PHP 8.3 or newer)
         run: |
           docker manifest create \
-            woodynew/frankenphp:$SEMVER_MAJOR \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-amd64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-386 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-arm64 \
-              --amend woodynew/frankenphp:$SEMVER_MINOR-armv7
-          docker manifest push woodynew/frankenphp:$SEMVER_MAJOR
+            registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MAJOR \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-amd64 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-386 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-arm64 \
+              --amend registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MINOR-armv7
+          docker manifest push registry.cn-hangzhou.aliyuncs.com/woodynew/frankenphp:$SEMVER_MAJOR

@@ -80,17 +80,8 @@ RUN install-php-extensions \
     zip \
     zlib \
     zstd \
-    xlswriter
-
-
-RUN set -eux \
-    # Fix php.ini settings for enabled extensions
-    && chmod +x "$(php -r 'echo ini_get("extension_dir");')"/* \
-    # Shrink binaries
-    && (find /usr/local/bin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
-    && (find /usr/local/lib -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
-    && (find /usr/local/sbin -type f -print0 | xargs -n1 -0 strip --strip-all -p 2>/dev/null || true) \
-    && true
+    xlswriter \
+    grpc
 
 # Install Composer
 RUN set -eux \
