@@ -2,8 +2,8 @@ name: release-ali-8.4-grpc
 on:
   push:
     tags:
-    - 'v8.4.[0-9]+-grpc'
-    - 'v8.4.[0-9]+-beta.[0-9]+-grpc'
+    - 'v8.4.[0-9]+'
+    - 'v8.4.[0-9]+-beta.[0-9]+'
 
 jobs:
   docker-build:
